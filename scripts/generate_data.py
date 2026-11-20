@@ -269,7 +269,7 @@ bills = [(date(2026, 10, 24), "Lakemont Regional Medical Center", [("Emergency d
          (date(2026, 11, 17), "Cedar Falls Orthopedic Group", [("Epidural steroid injection", 3900.0),
           ("Surgical consultation and pre-op workup", 10400.0)], "Lumbar disc herniation L4-L5; surgical candidate")]
 for svc, prov, items, dx in bills:
-    medical(c3, prov, svc, "Lucia Quintero", items, dx, svc + timedelta(days=2))
+    medical(c3, prov, svc, "Lucia Quintero", items, dx, svc + timedelta(days=1))
 note(c3, "Intake", datetime(2026, 10, 25, 10, 5), "Liability looks clear (rear-end). Passenger injury reported; "
      "med pay limit $5,000 on our policy, other carrier BI claim to be opened.")
 note(c3, "Alisha Brandt", datetime(2026, 11, 12, 16, 30), "PT bill received. Passenger now represented? Not confirmed.")
