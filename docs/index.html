@@ -217,18 +217,19 @@ footer { padding: 28px 0 46px; font-size: 14px; color: var(--ink-2); border-top:
       <table>
         <thead><tr><th>Step</th><th>Snowflake capability</th><th>What it does here</th></tr></thead>
         <tbody>
-          <tr><td>Intake</td><td>Stage, directory table, stream, task</td><td>New files on the stage are queued by a stream; a task calls one procedure whenever the stream has data.</td></tr>
-          <tr><td>Read</td><td>AI_PARSE_DOCUMENT</td><td>OCR and layout for every PDF, including estimate tables.</td></tr>
+          <tr><td>Intake</td><td>Stage, directory table, <a href="https://docs.snowflake.com/en/user-guide/streams-intro">stream</a>, <a href="https://docs.snowflake.com/en/user-guide/tasks-intro">task</a></td><td>New files on the stage are queued by a stream; a task calls one procedure whenever the stream has data.</td></tr>
+          <tr><td>Read</td><td><a href="https://docs.snowflake.com/en/sql-reference/functions/ai_parse_document">AI_PARSE_DOCUMENT</a></td><td>OCR and layout for every PDF, including estimate tables.</td></tr>
           <tr><td>Classify</td><td>AI_CLASSIFY</td><td>Names the document type, and suggests a handling tier from each claim's fact sheet.</td></tr>
           <tr><td>Extract</td><td>AI_EXTRACT</td><td>Fields per document type with a confidence score per field; estimate line items as a table.</td></tr>
           <tr><td>Photos</td><td>AI_COMPLETE (image input)</td><td>Describes the visible damage and rates its severity.</td></tr>
           <tr><td>Coverage</td><td>SQL views</td><td>Policy in force, deductible, days since inception, estimate vs line items, medical bills vs med pay, prior losses.</td></tr>
           <tr><td>Summary and routing</td><td>AI_COMPLETE, SQL</td><td>Writes the adjuster summary from the fact sheet and suggests the least-loaded qualified adjuster.</td></tr>
-          <tr><td>Ask the file</td><td>Cortex Search, AI_COMPLETE</td><td>Searches one claim's documents, photo assessments and notes, then answers with numbered citations.</td></tr>
+          <tr><td>Ask the file</td><td><a href="https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-search/cortex-search-overview">Cortex Search</a>, AI_COMPLETE</td><td>Searches one claim's documents, photo assessments and notes, then answers with numbered citations.</td></tr>
           <tr><td>Decisions</td><td>Table writes</td><td>Accept, correct and route actions are stored with who made them and when.</td></tr>
         </tbody>
       </table>
     </div>
+    <p>Parsing, classification, extraction and photo descriptions run only in the scheduled task, when new files land on the stage, not when you open a screen. The hosted example shows the stored output of that task. In Live mode, <b>Process new documents</b> on the Intake screen uploads a file and runs the task on demand. Ask the claims file sees new documents after the Cortex Search refresh (target lag 1 hour).</p>
   </div>
 </section>
 
@@ -250,7 +251,7 @@ npm run dev</pre>
         <ol class="steps">
           <li>Run <code>sql/setup.sql</code> in a Snowsight worksheet. It creates a dedicated database, an XSMALL warehouse and a least-privilege role, loads the synthetic files and runs the pipeline once.</li>
           <li>Register a key pair for your user and copy <code>.env.example</code> to <code>.env.local</code>.</li>
-          <li>Run <code>npm run dev</code> and switch to Live.</li>
+          <li>Run <code>npm run dev</code> and switch to Live. Use <b>Process new documents</b> on the Intake screen to upload a file and run the pipeline task.</li>
           <li>When you're done, run <code>sql/cleanup.sql</code>.</li>
         </ol>
         <p>Needs Cortex AI functions and Cortex Search in your region or through cross-region inference. The README lists every object, the measured cost and time.</p>

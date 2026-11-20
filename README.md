@@ -56,7 +56,9 @@ Open http://localhost:3000. The app runs on bundled responses captured from the 
 3. Copy `.env.example` to `.env.local` and fill in the account, user and key path.
 4. Run `npm run dev` and switch the header to **Live**. Every screen now reads from `CLAIMS_INTAKE_DEMO`; Regenerate, Ask, Accept, Correct and Route call Snowflake, and the badges show measured latency. If a live call fails, the app shows the error rather than sample data.
 
-To see the pipeline pick up a new file, upload a PDF to the stage, add a manifest row, and refresh the directory table. The task runs within five minutes (or run `EXECUTE TASK PROCESS_DOCS_TASK`):
+Parsing, classification, extraction and photo descriptions run only in the task, not when you open a screen. To process a new document in Live mode, use **Process new documents** on the Intake screen: pick a claim and a PDF or PNG (up to 5 MB). The app puts the file on `CLAIM_DOCS` with a generated name, adds its manifest row, refreshes the directory table and runs `EXECUTE TASK PROCESS_DOCS_TASK`, then shows the document type, confidence and new tier when the task finishes. In our test a one-page estimate PDF took about 2 minutes (task run 118 s) and a damage photo about 20 seconds.
+
+To do the same in SQL, upload a PDF to the stage, add a manifest row, and refresh the directory table. The task runs within five minutes (or run `EXECUTE TASK PROCESS_DOCS_TASK`):
 
 ```sql
 USE ROLE CLAIMS_INTAKE_DEMO_ROLE;
@@ -108,6 +110,7 @@ Run `sql/cleanup.sql`. It drops the database (and with it every table, stage, fi
 - Tiers come from AI_CLASSIFY with label descriptions. They are suggestions; on this data set the planted stories land in the expected lanes, but tune the descriptions and check them against your own routing guidelines before relying on them.
 - Routing is a simple round robin over qualified adjusters ordered by load. It doesn't model territories, licensing or availability.
 - New documents need a manifest row that links them to a claim, and internal stages need `ALTER STAGE ... REFRESH` before the stream sees new files.
+- The Cortex Search service uses `TARGET_LAG = '1 hour'`, so a newly processed document can take up to an hour to show up in Ask the claims file. Lower the lag for fresher answers at higher refresh cost, or run `ALTER CORTEX SEARCH SERVICE CLAIM_FILE_SEARCH REFRESH`.
 - The app connects as one role. There is no row-level separation between adjusters in this example.
 - Sample mode keeps your accept, correct and route decisions in memory for the current session only.
 
