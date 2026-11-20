@@ -281,7 +281,7 @@ function ClaimFileView() {
 
       <div className="grid gap-4 xl:grid-cols-[minmax(0,1.2fr)_minmax(0,.85fr)_minmax(0,1fr)] lg:grid-cols-2">
         <Panel eyebrow={doc ? DOC_TYPE_LABEL[doc.docType ?? ''] : 'Source'} title="Source document" right={<PoweredBy>{doc?.docType === 'damage_photo' ? 'AI_CLASSIFY (image)' : 'AI_PARSE_DOCUMENT'}</PoweredBy>}>
-          {doc ? <DocView key={doc.docId} doc={doc} active={active} onHover={setActive} /> : <p className="text-[13px] muted">No documents yet.</p>}
+          {doc ? <DocView key={doc.docId} doc={doc} active={active} onHover={setActive} sample={file?.provenance?.source === 'mock'} /> : <p className="text-[13px] muted">No documents yet.</p>}
         </Panel>
         <Panel eyebrow="Hover to find it in the source" title="Extracted fields" right={<PoweredBy>AI_EXTRACT</PoweredBy>}>
           {doc && <Fields file={file} doc={doc} active={active} setActive={setActive}

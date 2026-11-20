@@ -4,7 +4,7 @@
 // photo with its AI description. Shared by the inbox preview drawer and the claim file.
 import { ExternalLink, ImageIcon } from 'lucide-react';
 import type { ReactNode } from 'react';
-import { Markdown, PoweredBy } from '@/components/ui';
+import { Markdown, PoweredBy, SampleAiBadge } from '@/components/ui';
 import type { DocDetail } from '@/lib/types';
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
@@ -39,7 +39,7 @@ export function highlight(text: string, fields: Record<string, string>, active: 
 
 export const docHref = (d: DocDetail) => d.url || `${BASE}/documents/${d.fileName}`;
 
-export function DocView({ doc, active, onHover, maxH }: { doc: DocDetail; active: string | null; onHover?: (k: string | null) => void; maxH?: number }) {
+export function DocView({ doc, active, onHover, maxH, sample }: { doc: DocDetail; active: string | null; onHover?: (k: string | null) => void; maxH?: number; sample?: boolean }) {
   const href = docHref(doc);
   return (
     <div className="space-y-3 min-w-0">
@@ -56,7 +56,7 @@ export function DocView({ doc, active, onHover, maxH }: { doc: DocDetail; active
           </div>
           {doc.photoDescription && (
             <div className="ai-panel p-4 pl-5 border" style={{ borderColor: 'var(--line)' }}>
-              <div className="flex items-center justify-between gap-2 mb-1.5 flex-wrap"><span className="eyebrow">Damage description</span><PoweredBy>AI_COMPLETE (image input)</PoweredBy></div>
+              <div className="flex items-center justify-between gap-2 mb-1.5 flex-wrap"><span className="eyebrow">Damage description</span><span className="flex gap-1.5 flex-wrap">{sample && <SampleAiBadge />}<PoweredBy>AI_COMPLETE (image input)</PoweredBy></span></div>
               <Markdown text={doc.photoDescription} />
             </div>
           )}
