@@ -1,0 +1,9 @@
+adjuster_id,name,skills,capacity,open_claims
+ADJ01,Renata Okonkwo,Fast track; glass; comprehensive,40,24
+ADJ02,Dylan Achterberg,Fast track; collision property damage,40,31
+ADJ03,Mei-Lin Carver,Collision property damage; total loss,30,22
+ADJ04,Thomas Quill,Collision property damage; rental,30,27
+ADJ05,Alisha Brandt,Bodily injury; medical review,22,19
+ADJ06,Gabriel Ferreira,Bodily injury; litigation,20,12
+ADJ07,Priya Ramaswamy,Special investigations (SIU),15,9
+ADJ08,Colin Mbatha,Complex property damage; theft,25,14

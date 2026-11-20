@@ -1,0 +1,93 @@
+note_id,claim_id,author,created_at,note_text
+N-0001,CLM-24003,Intake,2026-11-13T09:12,"Loss-history report returned 3 prior losses in 32 months (2 thefts, 1 collision) with three different carriers. Policy bound 2026-11-10."
+N-0002,CLM-24003,Intake,2026-11-14T15:40,Insured called twice asking for payout timing. Says title is at home.
+N-0003,CLM-24004,Intake,2026-11-16T15:02,Insured prefers mobile glass service at work address.
+N-0004,CLM-24005,Intake,2026-10-25T10:05,"Liability looks clear (rear-end). Passenger injury reported; med pay limit $5,000 on our policy, other carrier BI claim to be opened."
+N-0005,CLM-24005,Alisha Brandt,2026-11-12T16:30,PT bill received. Passenger now represented? Not confirmed.
+N-0006,CLM-24005,Alisha Brandt,2026-11-18T09:45,Surgical consult bill received. Medical specials trending up fast; consider reserve review.
+N-0007,CLM-24009,Intake,2026-11-16T16:20,Voicemail left for insured to confirm loss location.
+N-0008,CLM-24012,Colin Mbatha,2026-11-04T14:00,Inspection scheduled at shop.
+N-0009,CLM-24015,Intake,2026-11-12T16:20,Voicemail left for insured to confirm loss location.
+N-0010,CLM-24017,Mei-Lin Carver,2026-10-25T11:00,Awaiting supplement from shop.
+N-0011,CLM-24020,Intake,2026-11-18T16:20,Insured asked about rental coverage.
+N-0012,CLM-24022,Colin Mbatha,2026-11-13T15:00,Awaiting supplement from shop.
+N-0013,CLM-24025,Renata Okonkwo,2026-11-09T14:00,Awaiting supplement from shop.
+N-0014,CLM-24027,Mei-Lin Carver,2026-11-11T10:00,Awaiting supplement from shop.
+N-0015,CLM-24029,Thomas Quill,2026-10-27T12:00,Awaiting supplement from shop.
+N-0016,CLM-24031,Colin Mbatha,2026-11-10T11:00,"Contacted insured, rental arranged."
+N-0017,CLM-24032,Colin Mbatha,2026-10-23T11:00,"Contacted insured, rental arranged."
+N-0018,CLM-24033,Thomas Quill,2026-11-05T11:00,"Contacted insured, rental arranged."
+N-0019,CLM-24034,Colin Mbatha,2026-10-29T10:00,Awaiting supplement from shop.
+N-0020,CLM-24036,Thomas Quill,2026-10-28T14:00,Inspection scheduled at shop.
+N-0021,CLM-24038,Thomas Quill,2026-10-31T15:00,"Contacted insured, rental arranged."
+N-0022,CLM-24040,Intake,2026-11-16T16:20,Insured uploaded documents through the portal.
+N-0023,CLM-24045,Thomas Quill,2026-11-07T15:00,Inspection scheduled at shop.
+N-0024,CLM-24047,Intake,2026-11-14T16:20,Voicemail left for insured to confirm loss location.
+N-0025,CLM-24050,Intake,2026-11-16T16:20,Voicemail left for insured to confirm loss location.
+N-0026,CLM-24053,Colin Mbatha,2026-11-03T16:00,Recorded statement taken; facts consistent with FNOL.
+N-0027,CLM-24054,Mei-Lin Carver,2026-11-09T15:00,Inspection scheduled at shop.
+N-0028,CLM-24057,Dylan Achterberg,2026-11-01T14:00,"Contacted insured, rental arranged."
+N-0029,CLM-24060,Intake,2026-11-15T16:20,Insured asked about rental coverage.
+N-0030,CLM-24062,Thomas Quill,2026-11-04T12:00,Inspection scheduled at shop.
+N-0031,CLM-24066,Thomas Quill,2026-10-31T11:00,Inspection scheduled at shop.
+N-0032,CLM-24068,Colin Mbatha,2026-11-10T15:00,Awaiting supplement from shop.
+N-0033,CLM-24071,Mei-Lin Carver,2026-10-25T11:00,Awaiting supplement from shop.
+N-0034,CLM-24072,Thomas Quill,2026-10-30T11:00,Recorded statement taken; facts consistent with FNOL.
+N-0035,CLM-24077,Colin Mbatha,2026-11-12T11:00,"Contacted insured, rental arranged."
+N-0036,CLM-24079,Dylan Achterberg,2026-10-28T10:00,Recorded statement taken; facts consistent with FNOL.
+N-0037,CLM-24082,Renata Okonkwo,2026-11-01T10:00,Awaiting supplement from shop.
+N-0038,CLM-24087,Mei-Lin Carver,2026-10-23T14:00,"Contacted insured, rental arranged."
+N-0039,CLM-24089,Colin Mbatha,2026-11-13T10:00,Inspection scheduled at shop.
+N-0040,CLM-24092,Colin Mbatha,2026-11-06T12:00,Inspection scheduled at shop.
+N-0041,CLM-24093,Thomas Quill,2026-11-11T13:00,Awaiting supplement from shop.
+N-0042,CLM-24094,Thomas Quill,2026-11-12T12:00,Inspection scheduled at shop.
+N-0043,CLM-24095,Dylan Achterberg,2026-11-01T10:00,"Contacted insured, rental arranged."
+N-0044,CLM-24098,Mei-Lin Carver,2026-10-30T11:00,Recorded statement taken; facts consistent with FNOL.
+N-0045,CLM-24101,Renata Okonkwo,2026-10-30T15:00,Inspection scheduled at shop.
+N-0046,CLM-24102,Mei-Lin Carver,2026-11-01T10:00,Awaiting supplement from shop.
+N-0047,CLM-24103,Thomas Quill,2026-11-05T10:00,"Contacted insured, rental arranged."
+N-0048,CLM-24107,Thomas Quill,2026-11-14T10:00,Recorded statement taken; facts consistent with FNOL.
+N-0049,CLM-24110,Colin Mbatha,2026-11-01T14:00,Inspection scheduled at shop.
+N-0050,CLM-24112,Gabriel Ferreira,2026-11-06T11:00,"Contacted insured, rental arranged."
+N-0051,CLM-24114,Thomas Quill,2026-11-09T11:00,"Contacted insured, rental arranged."
+N-0052,CLM-24116,Intake,2026-11-12T16:20,Insured asked about rental coverage.
+N-0053,CLM-24119,Mei-Lin Carver,2026-11-13T15:00,Recorded statement taken; facts consistent with FNOL.
+N-0054,CLM-24122,Mei-Lin Carver,2026-10-31T16:00,Awaiting supplement from shop.
+N-0055,CLM-24124,Thomas Quill,2026-11-11T13:00,Awaiting supplement from shop.
+N-0056,CLM-24126,Alisha Brandt,2026-11-02T13:00,Awaiting supplement from shop.
+N-0057,CLM-24129,Colin Mbatha,2026-11-07T13:00,Inspection scheduled at shop.
+N-0058,CLM-24131,Thomas Quill,2026-10-31T10:00,Recorded statement taken; facts consistent with FNOL.
+N-0059,CLM-24135,Thomas Quill,2026-11-03T14:00,Awaiting supplement from shop.
+N-0060,CLM-24137,Intake,2026-11-17T16:20,Insured uploaded documents through the portal.
+N-0061,CLM-24138,Intake,2026-11-12T16:20,Insured asked about rental coverage.
+N-0062,CLM-24139,Mei-Lin Carver,2026-11-03T12:00,Awaiting supplement from shop.
+N-0063,CLM-24144,Renata Okonkwo,2026-10-26T11:00,Awaiting supplement from shop.
+N-0064,CLM-24146,Thomas Quill,2026-11-02T10:00,Awaiting supplement from shop.
+N-0065,CLM-24147,Dylan Achterberg,2026-11-10T16:00,Awaiting supplement from shop.
+N-0066,CLM-24149,Colin Mbatha,2026-11-12T14:00,Recorded statement taken; facts consistent with FNOL.
+N-0067,CLM-24150,Dylan Achterberg,2026-11-07T15:00,Recorded statement taken; facts consistent with FNOL.
+N-0068,CLM-24156,Colin Mbatha,2026-11-04T14:00,Inspection scheduled at shop.
+N-0069,CLM-24158,Intake,2026-11-12T16:20,Insured uploaded documents through the portal.
+N-0070,CLM-24161,Intake,2026-11-13T16:20,Insured uploaded documents through the portal.
+N-0071,CLM-24163,Intake,2026-11-13T16:20,Insured uploaded documents through the portal.
+N-0072,CLM-24165,Mei-Lin Carver,2026-10-26T12:00,"Contacted insured, rental arranged."
+N-0073,CLM-24166,Colin Mbatha,2026-10-29T11:00,Awaiting supplement from shop.
+N-0074,CLM-24169,Colin Mbatha,2026-11-03T16:00,"Contacted insured, rental arranged."
+N-0075,CLM-24171,Gabriel Ferreira,2026-11-09T12:00,Awaiting supplement from shop.
+N-0076,CLM-24173,Dylan Achterberg,2026-11-08T13:00,Recorded statement taken; facts consistent with FNOL.
+N-0077,CLM-24174,Dylan Achterberg,2026-11-05T11:00,Awaiting supplement from shop.
+N-0078,CLM-24177,Mei-Lin Carver,2026-11-08T16:00,Inspection scheduled at shop.
+N-0079,CLM-24179,Dylan Achterberg,2026-11-12T10:00,Recorded statement taken; facts consistent with FNOL.
+N-0080,CLM-24182,Mei-Lin Carver,2026-11-09T10:00,Inspection scheduled at shop.
+N-0081,CLM-24184,Intake,2026-11-14T16:20,Insured asked about rental coverage.
+N-0082,CLM-24186,Thomas Quill,2026-11-14T12:00,"Contacted insured, rental arranged."
+N-0083,CLM-24193,Mei-Lin Carver,2026-11-06T10:00,"Contacted insured, rental arranged."
+N-0084,CLM-24196,Thomas Quill,2026-10-26T12:00,Inspection scheduled at shop.
+N-0085,CLM-24198,Gabriel Ferreira,2026-10-31T11:00,Inspection scheduled at shop.
+N-0086,CLM-24200,Thomas Quill,2026-10-25T11:00,Recorded statement taken; facts consistent with FNOL.
+N-0087,CLM-24201,Thomas Quill,2026-11-09T11:00,Recorded statement taken; facts consistent with FNOL.
+N-0088,CLM-24204,Thomas Quill,2026-11-03T15:00,Awaiting supplement from shop.
+N-0089,CLM-24208,Intake,2026-11-15T16:20,Insured uploaded documents through the portal.
+N-0090,CLM-24209,Mei-Lin Carver,2026-11-01T10:00,Inspection scheduled at shop.
+N-0091,CLM-24212,Thomas Quill,2026-10-25T14:00,Recorded statement taken; facts consistent with FNOL.
+N-0092,CLM-24214,Mei-Lin Carver,2026-10-31T13:00,"Contacted insured, rental arranged."

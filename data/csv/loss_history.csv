@@ -1,0 +1,4 @@
+policy_number,insured_name,loss_date,prior_carrier,loss_type,paid_amount
+PA-4719326,Desmond Varga,2024-03-14,Prior carrier A,Theft,18400
+PA-4719326,Desmond Varga,2025-02-22,Prior carrier B,Collision,9650
+PA-4719326,Desmond Varga,2025-09-05,Prior carrier C,Theft,21200
