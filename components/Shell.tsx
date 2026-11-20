@@ -64,7 +64,7 @@ export default function Shell({ children }: { children: ReactNode }) {
         <div className="flex-1 md:ml-60 min-w-0">
           {HOSTED_EXAMPLE && (
             <div role="note" className="px-4 md:px-8 py-2 text-xs border-b" style={{ background: 'var(--sample-soft)', borderColor: 'var(--border)', color: 'var(--text-2)' }}>
-              <strong style={{ color: 'var(--text)' }}>Sample data mode.</strong> Runs entirely in your browser on synthetic data; no Snowflake account needed. AI answers are scripted samples, not live Cortex output.{' '}
+              <strong style={{ color: 'var(--text)' }}>Sample data mode.</strong> Runs entirely in your browser on synthetic data; no Snowflake account needed. AI answers are samples captured from the live pipeline, not live Cortex output.{' '}
               <a href="https://github.com/sfc-gh-ooral/sfguide-claims-intake-assistant" className="underline underline-offset-2">Run it in your own account</a>
             </div>
           )}

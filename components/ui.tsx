@@ -109,7 +109,12 @@ export function Markdown({ text }: { text: string }) {
     if (/^\s*([-*]|\d+\.)\s+/.test(l)) {
       const ordered = /^\s*\d+\./.test(l);
       const items: string[] = [];
-      while (i < lines.length && /^\s*([-*]|\d+\.)\s+/.test(lines[i])) { items.push(lines[i].replace(/^\s*([-*]|\d+\.)\s+/, '')); i++; }
+      while (i < lines.length) {
+        if (/^\s*([-*]|\d+\.)\s+/.test(lines[i])) { items.push(lines[i].replace(/^\s*([-*]|\d+\.)\s+/, '')); i++; continue; }
+        // A blank line between items keeps the same list (and its numbering).
+        if (!lines[i].trim() && i + 1 < lines.length && /^\s*([-*]|\d+\.)\s+/.test(lines[i + 1])) { i++; continue; }
+        break;
+      }
       const li = items.map((t, j) => <li key={j}>{inline(t, j)}</li>);
       out.push(ordered ? <ol key={k++}>{li}</ol> : <ul key={k++}>{li}</ul>);
       continue;
