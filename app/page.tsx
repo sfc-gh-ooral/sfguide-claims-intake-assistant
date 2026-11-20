@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import { Bar, BarChart, CartesianGrid, Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { DocView } from '@/components/DocView';
+import { ProcessDocs } from '@/components/ProcessDocs';
 import { axisTick, chartTooltip, Confidence, ErrorState, Kpi, PageSkeleton, Panel, PoweredBy, Skeleton, SourceBadge, StatusPill, TierPill } from '@/components/ui';
 import { useAsync } from '@/components/useAsync';
 import { data } from '@/lib/client';
@@ -41,7 +42,7 @@ function Preview({ doc, onClose }: { doc: InboxDoc; onClose: () => void }) {
         </div>
         {loading || !d ? <Skeleton className="h-96" /> : (
           <>
-            <DocView doc={d} active={null} maxH={420} />
+            <DocView doc={d} active={null} maxH={420} sample={file?.provenance?.source === 'mock'} />
             {Object.keys(d.fields).length > 0 && (
               <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2 text-[12.5px]">
                 {Object.entries(d.fields).slice(0, 8).map(([k, v]) => (
@@ -183,6 +184,8 @@ export default function IntakePage() {
           </div>
         </Panel>
       </div>
+
+      <ProcessDocs claims={[...new Set(docs.map((d) => d.claimId))].sort()} />
 
       <Panel pad="p-0" className="overflow-hidden">
         <div className="p-5 pb-3 flex items-center gap-3 flex-wrap">

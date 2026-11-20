@@ -31,6 +31,9 @@ function cached<K extends 'inbox' | 'board'>(op: K): ClaimsData[K] {
   }) as ClaimsData[K];
 }
 
+// Drop cached inbox and board after new documents are processed.
+export function refreshData() { cache.clear(); listeners.forEach((fn) => fn()); }
+
 export const data: ClaimsData = {
   inbox: cached('inbox'),
   board: cached('board'),
