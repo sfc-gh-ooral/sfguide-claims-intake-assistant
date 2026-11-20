@@ -1,8 +1,8 @@
 policy_number,insured_name,product,state,address,inception_date,expiration_date,vehicle,vin,collision_deductible,comprehensive_deductible,full_glass,bi_limit_per_person,bi_limit_per_accident,pd_limit,med_pay_limit,rental_per_day
 PA-4719326,Desmond Varga,Personal Auto,OH,"5629 Oak St, Riverton, OH",2026-11-10,2027-11-10,2020 Subaru Outback,1BR1X84LPARD0APUZ,500,500,False,100000,200000,100000,5000,0
-PA-4382015,Hana Lindqvist,Personal Auto,OH,"952 Oak St, Fairview Heights, OH",2025-06-02,2026-06-02,2023 Hyundai Tucson,JY1K2UYHNU47KKES1,250,500,True,100000,200000,100000,5000,40
-PA-4561187,Marisol Quintero,Personal Auto,OH,"2788 Maple Ave, Brookhaven, OH",2025-09-18,2026-09-18,2021 Kia Sorento,5C7DLKM5KY2WUMZ3B,1000,500,False,250000,500000,50000,10000,30
-PA-4290654,Bram Kowalczyk,Personal Auto,OH,"395 Oak St, Riverton, OH",2025-03-11,2026-03-11,2023 Hyundai Tucson,KRL5PRRH2933S87V9,500,250,True,250000,500000,100000,10000,40
+PA-4382015,Hana Lindqvist,Personal Auto,OH,"952 Oak St, Fairview Heights, OH",2026-06-02,2027-06-02,2023 Hyundai Tucson,JY1K2UYHNU47KKES1,250,500,True,100000,200000,100000,5000,40
+PA-4561187,Marisol Quintero,Personal Auto,OH,"2788 Maple Ave, Brookhaven, OH",2025-12-18,2026-12-18,2021 Kia Sorento,5C7DLKM5KY2WUMZ3B,1000,500,False,250000,500000,50000,10000,30
+PA-4290654,Bram Kowalczyk,Personal Auto,OH,"395 Oak St, Riverton, OH",2026-03-11,2027-03-11,2023 Hyundai Tucson,KRL5PRRH2933S87V9,500,250,True,250000,500000,100000,10000,40
 PA-4836478,Wes Vasquez,Personal Auto,OH,"53 Maple Ave, Millbrook, OH",2026-03-08,2027-03-08,2019 Honda CR-V,5LDF0ACM4EAK4VF1K,500,250,True,100000,200000,100000,10000,40
 PA-4168275,Nora Calloway,Personal Auto,OH,"4018 County Rd 12, Cedar Falls, OH",2026-02-20,2027-02-20,2020 Mazda CX-5,1W9MS1UBHN7JS7LAJ,500,500,False,100000,200000,50000,5000,0
 PA-4493923,Omar Brennan,Personal Auto,OH,"4383 Main St, Riverton, OH",2026-03-20,2027-03-20,2021 Kia Sorento,52AWXZ6HVEEA3DTC9,1000,250,False,250000,500000,50000,5000,0

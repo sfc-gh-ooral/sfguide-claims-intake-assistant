@@ -1,8 +1,9 @@
 """Seeded, deterministic generator for the Claims Intake and Triage Assistant example.
 
-Writes synthetic tables to data/csv/, one document per file to data/documents/ (PDF
+Writes synthetic tables to data/csv/ and one document per file to data/documents/ (PDF
 forms, emails, estimates, police and medical summaries, plus a few drawn damage
-illustrations as PNG), and the same records to lib/mock/base.json for no-account mode.
+illustrations as PNG). sql/setup.sql loads both; the app's no-account mode uses
+responses captured from the live app (scripts/capture-sample.mjs).
 Every name, number and document is invented. Run: python3 scripts/generate_data.py
 Requires: reportlab, Pillow.
 """
@@ -18,8 +19,8 @@ from reportlab.lib.pagesizes import LETTER
 from reportlab.pdfgen import canvas
 
 ROOT = Path(__file__).resolve().parent.parent
-CSV_DIR, DOC_DIR, MOCK = ROOT / "data/csv", ROOT / "data/documents", ROOT / "lib/mock"
-for d in (CSV_DIR, DOC_DIR, MOCK):
+CSV_DIR, DOC_DIR = ROOT / "data/csv", ROOT / "data/documents"
+for d in (CSV_DIR, DOC_DIR):
     d.mkdir(parents=True, exist_ok=True)
 
 rng = random.Random(20261118)
@@ -234,7 +235,7 @@ note(c1, "Intake", datetime(2026, 11, 13, 9, 12), "Loss-history report returned 
 note(c1, "Intake", datetime(2026, 11, 14, 15, 40), "Insured called twice asking for payout timing. Says title is at home.")
 
 # ---- Story 2: low-complexity glass claim suited to fast track.
-p2 = new_policy("PA-4382015", "Hana Lindqvist", inception=date(2025, 6, 2))
+p2 = new_policy("PA-4382015", "Hana Lindqvist", inception=date(2026, 6, 2))
 p2["full_glass"] = True
 c2, _ = make_claim("Glass", p2, loss_date=date(2026, 11, 16), reported=date(2026, 11, 16), story="glass")
 fnol(c2, p2, "A rock from a gravel truck hit my windshield on the highway. There is a crack about 10 inches long "
@@ -245,7 +246,7 @@ photo(c2, "windshield", datetime(2026, 11, 16, 14, 5))
 note(c2, "Intake", datetime(2026, 11, 16, 15, 2), "Insured prefers mobile glass service at work address.")
 
 # ---- Story 3: bodily injury with escalating medical bills.
-p3 = new_policy("PA-4561187", "Marisol Quintero", inception=date(2025, 9, 18))
+p3 = new_policy("PA-4561187", "Marisol Quintero", inception=date(2025, 12, 18))
 c3, _ = make_claim("Collision with injury", p3, loss_date=date(2026, 10, 24), reported=date(2026, 10, 24), story="bi")
 c3["_other"] = "Grant Ashworth, 2018 Chevrolet Malibu"
 fnol(c3, p3, "I was stopped at a red light when another car hit me from behind. My passenger, my sister Lucia "
@@ -277,7 +278,7 @@ note(c3, "Alisha Brandt", datetime(2026, 11, 18, 9, 45), "Surgical consult bill 
      "fast; consider reserve review.")
 
 # ---- Story 4: estimate whose total doesn't match its line items.
-p4 = new_policy("PA-4290654", "Bram Kowalczyk", inception=date(2025, 3, 11))
+p4 = new_policy("PA-4290654", "Bram Kowalczyk", inception=date(2026, 3, 11))
 c4, _ = make_claim("Collision", p4, loss_date=date(2026, 11, 14), reported=date(2026, 11, 15), story="estimate")
 fnol(c4, p4, "I slid on wet leaves and hit a guardrail with the front of my car. Front end damage, the hood is bent.")
 claim_form(c4, p4, "Single-vehicle collision with guardrail on wet road.")
@@ -568,9 +569,5 @@ for tname, rows in tables.items():
         w.writeheader()
         w.writerows(rows)
 
-base = dict(asOf=d(AS_OF), carrier=CARRIER, stories=STORY,
-            policies=policies, adjusters=adjusters, claims=claims, notes=notes, lossHistory=loss_history,
-            documents=[{k: v for k, v in x.items() if not k.startswith("_")} for x in documents])
-(MOCK / "base.json").write_text(json.dumps(base, indent=1))
 print(f"{len(claims)} claims, {len(documents)} documents, {len(notes)} notes, {len(policies)} policies, "
       f"{len(closed)} closed claims. Stories: {STORY}")
