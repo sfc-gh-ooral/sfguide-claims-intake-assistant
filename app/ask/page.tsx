@@ -27,7 +27,7 @@ function CitationCard({ c, on, refCb }: { c: Citation; on: boolean; refCb: (el: 
         <span className="ml-auto mono text-[11px] muted shrink-0">{c.date.slice(0, 10)}</span>
       </div>
       <div className="text-[11.5px] muted mono truncate mt-0.5">{c.name}</div>
-      <p className="text-[12.5px] mt-1.5 line-clamp-4">{c.snippet}</p>
+      <p className="text-[12.5px] mt-1.5 line-clamp-4">{c.snippet.replace(/#+ /g, "")}</p>
     </li>
   );
 }

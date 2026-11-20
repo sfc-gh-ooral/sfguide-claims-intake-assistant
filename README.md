@@ -89,10 +89,10 @@ Measured on an XSMALL warehouse in AWS US East 1, November 2026, for the 306 bun
 
 | | Measured |
 | --- | --- |
-| Setup time | 36 minutes end to end on our clean run, on a shared account where the AI_EXTRACT batch waited about 30 minutes in a queue. On an earlier, quieter run, extraction, photo descriptions and triage for all documents took under 4 minutes |
+| Setup time | 19 minutes end to end on the latest clean run (November 2026); parsing all 306 documents took most of it. An earlier run on a busier shared account took 36 minutes because the AI_EXTRACT batch queued |
 | Cortex AI credits per full setup | About 15: AI_EXTRACT about 13 (about 0.044 credits per document), AI_PARSE_DOCUMENT about 1.1, AI_CLASSIFY and AI_COMPLETE well under 1 together |
-| Warehouse credits | About 0.6 for setup, plus a few seconds per app query; the warehouse suspends after 60 seconds |
-| Live app latency | Screens 0.7–2.3 s; Ask the claims file 3.1–6.8 s (median 4.6 s); Regenerate summary 5.5–8.8 s |
+| Warehouse credits | About 0.45–0.6 for setup, plus a few seconds per app query; the warehouse suspends after 60 seconds |
+| Live app latency | Screens 0.7–4.1 s; Ask the claims file 3.1–6.8 s (median 4.6 s); Regenerate summary 5.5–8.8 s |
 
 Most of the cost is AI_EXTRACT. To try it more cheaply on your own documents, start with a small sample or fewer fields. The task's `WHEN SYSTEM$STREAM_HAS_DATA` check doesn't start the warehouse while no files arrive. Costs depend on your region, model, document length and pricing; check the [Snowflake Service Consumption Table](https://www.snowflake.com/legal-files/CreditConsumptionTable.pdf).
 
