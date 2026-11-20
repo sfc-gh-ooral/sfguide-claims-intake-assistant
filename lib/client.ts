@@ -1,5 +1,7 @@
 // Browser-side access to ClaimsData. The hosted /try/ build has no server, so it calls the
 // sample implementation directly; otherwise every call goes to /api/data, which picks sample or live.
+// Inbox and board are cached per page load (the shell and the page both read them) and
+// refreshed after a decision is recorded.
 import type { ClaimsData } from './claims-data';
 import { HOSTED_EXAMPLE } from './hosted';
 import { mockData } from './mock-data';
@@ -14,8 +16,31 @@ async function call<T>(op: Op, args: unknown[]): Promise<T> {
   return json as T;
 }
 
-const remote = new Proxy({} as ClaimsData, {
+const source: ClaimsData = HOSTED_EXAMPLE ? mockData : new Proxy({} as ClaimsData, {
   get: (_t, op: Op) => (...args: unknown[]) => call(op, args),
 });
 
-export const data: ClaimsData = HOSTED_EXAMPLE ? mockData : remote;
+const cache = new Map<string, Promise<unknown>>();
+const listeners = new Set<() => void>();
+export function onDataChange(fn: () => void) { listeners.add(fn); return () => { listeners.delete(fn); }; }
+
+function cached<K extends 'inbox' | 'board'>(op: K): ClaimsData[K] {
+  return (() => {
+    if (!cache.has(op)) { const p = source[op](); cache.set(op, p); p.catch(() => cache.delete(op)); }
+    return cache.get(op);
+  }) as ClaimsData[K];
+}
+
+export const data: ClaimsData = {
+  inbox: cached('inbox'),
+  board: cached('board'),
+  claim: (id) => source.claim(id),
+  summarize: (id) => source.summarize(id),
+  ask: (id, q) => source.ask(id, q),
+  act: async (a) => {
+    const r = await source.act(a);
+    cache.clear();
+    listeners.forEach((fn) => fn());
+    return r;
+  },
+};
