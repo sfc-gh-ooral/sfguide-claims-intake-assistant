@@ -27,6 +27,6 @@ only uses it to measure how often AI_CLASSIFY agrees.
 | CLM-24003 | Theft reported 2 days after the policy was bound; the loss-history report shows 3 prior losses (2 thefts) with three carriers, and the police report was filed 3 days late | SIU referral tier, red flags in the AI summary |
 | CLM-24004 | Windshield crack from road debris, full-glass coverage, $412 estimate, photo attached | Fast track tier, $0 deductible in the coverage check |
 | CLM-24005 | Rear-end collision; the passenger's medical bills climb from $1,240 to $3,860, $7,950 and $14,300 | Complex tier, bills in date order exceed the $5,000 med pay limit |
-| CLM-24008 | Repair estimate whose stated total ($5,229) is $1,250 more than its line items ($3,979) | "Estimate total ≠ line items" flag, Complex tier |
+| CLM-24008 | Repair estimate whose stated total ($5,229) is $1,250 more than its line items ($3,979) | "Estimate total ≠ line items" flag; the AI summary asks for a corrected estimate (AI_CLASSIFY put it in Standard on our run) |
 
 Regenerate with `python3 scripts/generate_data.py` (needs `reportlab` and `Pillow`).

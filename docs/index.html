@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claims Intake and Triage Assistant · Snowflake example</title>
+<meta name="description" content="Help claims teams turn FNOL emails, forms, photos and repair estimates into structured, triaged claims with an AI summary for every adjuster. A Snowflake example on synthetic data.">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: light-dark(#f6f7fb, #0d1220);
+  --card: light-dark(#ffffff, #141b2d);
+  --card-2: light-dark(#f0f2f8, #1b2439);
+  --border: light-dark(#dde1ec, #2a3550);
+  --text: light-dark(#141a2e, #e8ecf6);
+  --text-2: light-dark(#4a5373, #aab3cc);
+  --muted: light-dark(#6b7493, #8590ad);
+  --accent: light-dark(#1a6fd1, #5aa7f5);
+  --accent-soft: light-dark(rgba(26,111,209,.1), rgba(90,167,245,.14));
+  --warn-soft: light-dark(#fff6e6, #2b2414);
+  --warn-border: light-dark(#f0c36d, #6b5420);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.6 ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-font-smoothing: antialiased; }
+a { color: var(--accent); }
+img, svg { max-width: 100%; height: auto; }
+.wrap { max-width: 1080px; width: 100%; margin: 0 auto; padding: 0 clamp(16px, 4vw, 28px); }
+header.top { border-bottom: 1px solid var(--border); background: var(--card); }
+header.top .wrap { display: flex; align-items: center; gap: 12px; padding-top: 14px; padding-bottom: 14px; flex-wrap: wrap; }
+.mark { width: 30px; height: 30px; border-radius: 8px; background: var(--accent); display: grid; place-items: center; }
+.brand { font-weight: 650; }
+.brand small { display: block; color: var(--muted); font-weight: 400; font-size: 12px; }
+nav.links { margin-left: auto; display: flex; gap: 16px; flex-wrap: wrap; font-size: 14px; }
+nav.links a { text-decoration: none; color: var(--text-2); }
+nav.links a:hover { color: var(--accent); }
+.hero { padding-top: clamp(36px, 7vw, 72px); padding-bottom: 28px; }
+.eyebrow { font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+h1 { font-size: clamp(30px, 5vw, 46px); line-height: 1.15; margin: 10px 0 16px; letter-spacing: -.01em; }
+.lede { font-size: clamp(17px, 2.2vw, 19px); color: var(--text-2); max-width: 760px; margin: 0 0 24px; }
+.cta { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 26px; }
+.btn { display: inline-block; padding: 10px 16px; border-radius: 9px; border: 1px solid var(--border); background: var(--card); color: var(--text); text-decoration: none; font-weight: 600; font-size: 15px; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; }
+.fact { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; font-size: 14px; }
+.fact b { display: block; font-size: 12px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.note { background: var(--warn-soft); border: 1px solid var(--warn-border); border-radius: 10px; padding: 12px 16px; font-size: 14px; margin: 22px 0 0; }
+section { padding: 44px 0; border-top: 1px solid var(--border); }
+h2 { font-size: clamp(24px, 3.4vw, 30px); margin: 0 0 10px; }
+h3 { font-size: 18px; margin: 0 0 6px; }
+.sub { color: var(--text-2); max-width: 760px; margin: 0 0 24px; }
+.grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px; }
+.card p { margin: 0; color: var(--text-2); font-size: 15px; }
+figure { margin: 0 0 34px; }
+figure img { display: block; width: 100%; border: 1px solid var(--border); border-radius: 12px; background: var(--card); }
+figcaption { margin-top: 10px; font-size: 15px; color: var(--text-2); }
+figcaption .cap { display: inline-block; font-size: 12px; font-weight: 600; color: var(--accent); background: var(--accent-soft); border-radius: 999px; padding: 1px 9px; margin-right: 6px; }
+.step { font-size: 13px; font-weight: 700; color: var(--muted); margin-bottom: 6px; }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 22px; align-items: start; }
+.table-wrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+th { background: var(--card-2); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+code, pre { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 13px; }
+code { background: var(--card-2); padding: 1px 5px; border-radius: 4px; }
+pre { background: var(--card-2); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; overflow-x: auto; margin: 0 0 14px; }
+pre code { background: none; padding: 0; }
+ul { padding-left: 20px; }
+li { margin: 4px 0; }
+footer { border-top: 1px solid var(--border); padding: 28px 0 44px; color: var(--muted); font-size: 14px; }
+@media (max-width: 560px) { nav.links { margin-left: 0; width: 100%; gap: 12px; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="mark" aria-hidden="true">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 15l2 2 4-4"/></svg>
+    </div>
+    <div class="brand">Claims Intake and Triage Assistant<small>A Snowflake example on synthetic data</small></div>
+    <nav class="links" aria-label="Page sections">
+      <a href="#walkthrough">Walkthrough</a>
+      <a href="#how-it-works">How it works</a>
+      <a href="#get-started">Get started</a>
+      <a href="https://github.com/sfc-gh-ooral/sfguide-claims-intake-assistant">Repository</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<div class="wrap hero" id="problem">
+  <div class="eyebrow">Insurance · Claims</div>
+  <h1>Turn every first notice of loss into a structured, triaged claim</h1>
+  <p class="lede">A first notice of loss (FNOL) arrives as an email, then a claim form, a body shop estimate, a police report, medical bills and photos. Someone has to read each one, key the fields, check the policy, spot the red flags and pick an adjuster. This example reads every document as it lands, extracts the fields with confidence scores, checks coverage, suggests a handling tier and adjuster with a short AI summary, and lets the adjuster ask questions about the claim file. The adjuster stays in charge: accept, correct a field, or route it elsewhere.</p>
+  <div class="cta">
+    <a class="btn primary" href="try/">Try the example in your browser</a>
+    <a class="btn" href="https://github.com/sfc-gh-ooral/sfguide-claims-intake-assistant">View the repository</a>
+  </div>
+  <div class="facts">
+    <div class="fact"><b>No-account mode</b>Runs in the browser on synthetic data; nothing to install</div>
+    <div class="fact"><b>Live mode</b>Any edition; Cortex AI functions and Cortex Search</div>
+    <div class="fact"><b>Setup</b>One Snowsight worksheet; 36 minutes on our busy test account</div>
+    <div class="fact"><b>Measured cost</b>About 15 Cortex AI credits and 0.6 warehouse credits for 306 documents</div>
+  </div>
+  <p class="note"><strong>Synthetic data, illustrative logic.</strong> Every person, policy, carrier, shop and clinic is fictional, and the damage photos are drawn illustrations. This is not claims-handling, legal, regulatory or compliance advice, and it isn't a production system. Tiers and routing are suggestions for an adjuster to review.</p>
+</div>
+
+<section>
+  <div class="wrap">
+    <h2>Who it's for</h2>
+    <div class="grid3">
+      <div class="card"><h3>Intake teams</h3><p>An inbox of every incoming document with its type, extraction status and confidence, so people review only what needs a second look.</p></div>
+      <div class="card"><h3>Adjusters</h3><p>A claim file with the source document beside the extracted fields, a coverage check, an AI summary, and questions answered with citations.</p></div>
+      <div class="card"><h3>Claims managers</h3><p>A triage board by tier with red flags, adjuster workload against capacity, and cycle time by tier.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="walkthrough">
+  <div class="wrap">
+    <h2>Walkthrough</h2>
+    <p class="sub">Screenshots of the app in no-account mode. Its data and AI text were captured from the live pipeline on the same synthetic documents. Results such as the SIU referral are planted stories on this synthetic data set.</p>
+    <figure>
+      <img src="images/01-intake-inbox.png" alt="Intake inbox: 306 documents received and extracted, 23 flagged for review because a field scored under 80% confidence, documents by type, and the newest documents with status and confidence" loading="lazy">
+      <figcaption><span class="cap">Stage, stream and task</span>The intake inbox. Every file that lands on the stage is parsed, classified and extracted by the task; the lowest AI_EXTRACT confidence decides whether it needs review.</figcaption>
+    </figure>
+    <figure>
+      <img src="images/02-claim-siu.png" alt="Claim file for CLM-24003: the parsed FNOL email with extracted values highlighted, fields with confidence scores, and an AI summary suggesting an SIU referral to the SIU adjuster" loading="lazy">
+      <figcaption><span class="cap">AI_EXTRACT · AI_COMPLETE · AI_CLASSIFY</span>A theft reported two days after the policy was bound, with three prior losses. The parsed email sits beside the extracted fields; AI_CLASSIFY suggests an SIU referral and AI_COMPLETE explains why.</figcaption>
+    </figure>
+    <figure>
+      <img src="images/03-estimate-mismatch.png" alt="Claim file for CLM-24008: a repair estimate with its total highlighted, the extracted line items, and an AI summary noting the $5,229 total is $1,250 more than the $3,979 of line items" loading="lazy">
+      <figcaption><span class="cap">AI_EXTRACT table extraction</span>An estimate whose stated total does not match its line items. AI_EXTRACT pulls the line-item table, SQL compares the sums, and the summary asks for a corrected estimate.</figcaption>
+    </figure>
+    <figure>
+      <img src="images/04-glass-photo.png" alt="Claim file for CLM-24004: a damage illustration of a cracked windshield, an AI description rating it minor, and a fast-track summary with a $0 glass deductible" loading="lazy">
+      <figcaption><span class="cap">AI_COMPLETE on an image</span>A windshield claim suited to fast track. AI_COMPLETE describes the (synthetic) damage photo, and the coverage check finds full-glass coverage with no deductible.</figcaption>
+    </figure>
+    <figure>
+      <img src="images/05-triage-board.png" alt="Triage board: fast track, standard, complex and SIU lanes with claim cards, red-flag tags and suggested adjusters" loading="lazy">
+      <figcaption><span class="cap">AI_CLASSIFY</span>The triage board. Claims sit in the lane AI_CLASSIFY suggested until an adjuster accepts or changes it; new claims show the least-loaded qualified adjuster.</figcaption>
+    </figure>
+    <figure>
+      <img src="images/06-ask-medical.png" alt="Ask the claims file for CLM-24005: an answer tracing medical bills from $1,240 to $14,300, with five numbered citations to bills and adjuster notes" loading="lazy">
+      <figcaption><span class="cap">Cortex Search · AI_COMPLETE</span>Ask the claims file. Cortex Search finds the bills and notes for this one claim, and AI_COMPLETE answers with numbered citations.</figcaption>
+    </figure>
+    <figure>
+      <img src="images/07-bi-coverage.png" alt="Claim file for CLM-24005: a medical bill with the coverage check showing four bills totaling $27,350 against a $5,000 med pay limit" loading="lazy">
+      <figcaption><span class="cap">SQL over extracted fields</span>A bodily-injury claim with climbing medical bills. The coverage check shows the bills in date order against the med pay limit.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="how-it-works">
+  <div class="wrap">
+    <h2>How it works</h2>
+    <p class="sub">Each capability below ran in live mode on a Snowflake account in AWS US East 1 in November 2026.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Step</th><th>Snowflake capability</th><th>What it does here</th></tr></thead>
+        <tbody>
+          <tr><td>Intake</td><td><a href="https://docs.snowflake.com/en/user-guide/data-load-dirtables-pipeline">Stage, directory table, stream and task</a></td><td>New files on the stage are queued by a stream; a task calls one procedure whenever the stream has data.</td></tr>
+          <tr><td>Read</td><td><a href="https://docs.snowflake.com/en/sql-reference/functions/ai_parse_document">AI_PARSE_DOCUMENT</a></td><td>OCR and layout for every PDF, including the estimate tables.</td></tr>
+          <tr><td>Classify</td><td><a href="https://docs.snowflake.com/en/sql-reference/functions/ai_classify">AI_CLASSIFY</a></td><td>Names the document type (it agreed with the generator's label on all 306 documents in our final run) and suggests a handling tier from the claim's facts.</td></tr>
+          <tr><td>Extract</td><td><a href="https://docs.snowflake.com/en/sql-reference/functions/ai_extract">AI_EXTRACT</a></td><td>Pulls the fields for each document type with a confidence score per field, and extracts estimate line items as a table.</td></tr>
+          <tr><td>Photos</td><td><a href="https://docs.snowflake.com/en/sql-reference/functions/ai_complete-single-file">AI_COMPLETE</a> on an image</td><td>Describes the visible damage and rates its severity.</td></tr>
+          <tr><td>Coverage and red flags</td><td>SQL views</td><td>Policy in force, deductible, days since inception, estimate total vs line items, medical bills vs med pay, prior losses.</td></tr>
+          <tr><td>Summary and routing</td><td><a href="https://docs.snowflake.com/en/sql-reference/functions/ai_complete-single-string">AI_COMPLETE</a> and SQL</td><td>Writes the adjuster summary from the fact sheet; suggests the least-loaded adjuster with the right skills.</td></tr>
+          <tr><td>Ask the claims file</td><td><a href="https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-search/cortex-search-overview">Cortex Search</a> and AI_COMPLETE</td><td>Searches one claim's documents, photo assessments and notes, then answers with numbered citations.</td></tr>
+          <tr><td>Decisions</td><td>Table writes from the app</td><td>Accept, correct and route actions are stored with who made them and when.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="get-started">
+  <div class="wrap">
+    <h2>Get started</h2>
+    <div class="two">
+      <div>
+        <h3>No account</h3>
+        <p class="sub" style="margin-bottom:12px">Open the <a href="try/">hosted example</a>, or run it locally with Node.js 20.19 or later:</p>
+<pre><code>git clone https://github.com/sfc-gh-ooral/sfguide-claims-intake-assistant.git
+cd sfguide-claims-intake-assistant
+npm install
+npm run dev</code></pre>
+        <p class="sub">AI answers in this mode are captured from the live pipeline and labeled <strong>Sample AI response</strong>.</p>
+      </div>
+      <div>
+        <h3>Your Snowflake account</h3>
+        <ol>
+          <li>Run <a href="https://github.com/sfc-gh-ooral/sfguide-claims-intake-assistant/blob/main/sql/setup.sql"><code>sql/setup.sql</code></a> in a Snowsight worksheet. It creates a dedicated database, an XSMALL warehouse and a least-privilege role, loads the synthetic files from the repository, and runs the pipeline once.</li>
+          <li>Register a key pair for your user and copy <code>.env.example</code> to <code>.env.local</code>.</li>
+          <li>Run <code>npm run dev</code> and switch to Live. Each AI call shows its measured latency.</li>
+          <li>When you're done, run <code>sql/cleanup.sql</code>.</li>
+        </ol>
+        <p class="sub">Cortex AI functions and Cortex Search must be available in your region or through cross-region inference. The README lists every object created, the cost, and the full steps.</p>
+      </div>
+    </div>
+    <h3 style="margin-top:20px">Customize with Cortex Code</h3>
+    <ul>
+      <li>"Point the pipeline at my stage of FNOL documents and propose the extraction schema from 20 samples."</li>
+      <li>"Tune the complexity tiers to my routing guidelines and show disagreements with past adjuster decisions."</li>
+      <li>"Add a subrogation-potential flag with the evidence it uses."</li>
+    </ul>
+  </div>
+</section>
+
+<section id="limits">
+  <div class="wrap">
+    <h2>Limits and disclaimer</h2>
+    <ul>
+      <li>Damage photos are drawn illustrations, so the photo descriptions describe illustrations.</li>
+      <li>Tiers come from AI_CLASSIFY with label descriptions and can vary between runs. Tune and test them against your own routing guidelines.</li>
+      <li>Routing is a simple load-based round robin over qualified adjusters.</li>
+      <li>Most of the cost is AI_EXTRACT (about 0.044 credits per document in our test). Costs and latency depend on your account, region and model.</li>
+    </ul>
+    <p class="note">This is an illustrative example provided as is. It is not an official Snowflake product, it isn't supported by Snowflake Support, and it contains no customer data. Apache 2.0 license.</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">Owner: Oz Oral · Last reviewed: November 2026 · <a href="https://github.com/sfc-gh-ooral/sfguide-claims-intake-assistant">Repository</a> · <a href="https://docs.snowflake.com/">Snowflake documentation</a></div>
+</footer>
+</body>
+</html>
